@@ -1,0 +1,161 @@
+<template>
+    <div class="container">
+        <!--Home-->
+        <template if:true={showsHome}>
+            <header class="slds-text-align_right slds-p-around_x-small">
+                <lightning-button-icon icon-name="utility:new_direct_message" variant="bare" size="medium"
+                    onclick={navigateToUserSearchForm}>
+                </lightning-button-icon>
+            </header>
+            <section id="conversations" class="body">
+                <template for:each={conversations} for:item="conversation">
+                    <div class="slds-tile slds-media slds-p-around_small conversation" key={conversation.id}>
+                        <a onclick={navigateToConversation} data-id={conversation.id}></a>
+                        <div class="slds-media__figure">
+                            <lightning-avatar size="medium" src={conversation.smallPhotoUrl}
+                                fallback-icon-name="standard:user" variant="circle"></lightning-avatar>
+                        </div>
+                        <div class="slds-media__body">
+                            <h3 class="slds-truncate">{conversation.formattedRecipientNames}</h3>
+                            <div class="slds-grid">
+                                <div class="slds-col slds-truncate slds-p-right_x-small">{conversation.message}</div>
+                                <div class="slds-col slds-shrink-none slds-text-color_weak slds-text-align_right">
+                                    <lightning-formatted-date-time value={conversation.sentDate}>
+                                    </lightning-formatted-date-time>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </section>
+        </template>
+        <!--Conversation Detail-->
+        <template if:true={showsConversation}>
+            <header class="slds-p-around_x-small">
+                <lightning-layout>
+                    <lightning-layout-item size="2">
+                        <lightning-button-icon variant="bare" icon-name="utility:back" size="medium"
+                            onclick={navigateToPreviousPage}>
+                        </lightning-button-icon>
+                    </lightning-layout-item>
+                    <lightning-layout-item class="slds-text-align_center" size="8">
+                        <h3 class="slds-truncate">{formattedRecipientNames}</h3>
+                    </lightning-layout-item>
+                    <lightning-layout-item class="slds-text-align_right" size="2">
+                        <lightning-button-icon variant="bare" icon-name="utility:refresh" size="medium"
+                            onclick={refreshConversation}>
+                        </lightning-button-icon>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </header>
+            <section id="messages" role="log" class="slds-chat slds-p-top_xx-small">
+                <ul class="slds-chat-list">
+                    <template for:each={messages} for:item="message">
+                        <template if:true={message.isMine}>
+                            <li class="slds-chat-listitem slds-chat-listitem_outbound" key={message.id}>
+                                <div class="slds-chat-message">
+                                    <div class="slds-chat-message__body message">
+                                        <div class="slds-chat-message__text slds-chat-message__text_outbound">
+                                            <span>{message.text}</span>
+                                        </div>
+                                        <div class="slds-chat-message__meta">{message.sender} •
+                                            {message.formattedSentDate}
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </template>
+                        <template if:false={message.isMine}>
+                            <li class="slds-chat-listitem slds-chat-listitem_inbound" key={message.id}>
+                                <div class="slds-chat-message">
+                                    <span aria-hidden="true" class="slds-avatar slds-avatar_circle slds-chat-avatar">
+                                        <lightning-avatar size="medium" src={message.smallPhotoUrl}
+                                            fallback-icon-name="standard:user" variant="circle"></lightning-avatar>
+                                    </span>
+                                    <div class="slds-chat-message__body message">
+                                        <div class="slds-chat-message__text slds-chat-message__text_inbound">
+                                            <span>{message.text}</span>
+                                        </div>
+                                        <div class="slds-chat-message__meta">{message.sender} •
+                                            {message.formattedSentDate}
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </template>
+                    </template>
+                </ul>
+            </section>
+            <footer class="slds-p-around_x-small">
+                <lightning-layout vertical-align="center">
+                    <lightning-layout-item flexibility="grow">
+                        <lightning-textarea value={newMessage} variant="label-hidden" onchange={handleChangeNewMessage}
+                            class="no-scroll">
+                        </lightning-textarea>
+                    </lightning-layout-item>
+                    <lightning-layout-item flexibility="no-grow" class="slds-p-left_small">
+                        <lightning-button-icon variant="border-filled" icon-name="utility:send" size="medium"
+                            onclick={sendMessage}>
+                        </lightning-button-icon>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </footer>
+        </template>
+        <!--Search User-->
+        <template if:true={showsUserSearchForm}>
+            <header class="slds-p-around_x-small">
+                <lightning-layout>
+                    <lightning-layout-item flexibility="grow">
+                        <lightning-button-icon variant="bare" icon-name="utility:close" size="medium"
+                            onclick={navigateToHome}>
+                        </lightning-button-icon>
+                    </lightning-layout-item>
+                    <lightning-layout-item flexibility="grow" class="slds-text-align_right">
+                        <template if:true={hasNewRecipients}>
+                            <lightning-button-icon variant="bare" icon-name="utility:forward" data-id=""
+                                onclick={navigateToConversation}></lightning-button-icon>
+                        </template>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </header>
+            <section class="slds-p-around_x-small body">
+                <div class="slds-m-bottom_x-small">
+                    <lightning-input type="search" variant="label-hidden" placeholder="Search recipient user..."
+                        value={userSearchKeyword} onchange={handleChangeUserSearchKeyword}>
+                    </lightning-input>
+                </div>
+                <div class="slds-m-bottom_small">
+                    <template for:each={newRecipients} for:item="newRecipient">
+                        <lightning-pill label={newRecipient.name} key={newRecipient.id} data-id={newRecipient.id}
+                            onremove={removeFromNewRecipients}>
+                            <lightning-avatar size="x-small" src={newRecipient.smallPhotoUrl}
+                                fallback-icon-name="standard:user" variant="circle"></lightning-avatar>
+                        </lightning-pill>
+                    </template>
+                </div>
+                <div>
+                    <template for:each={users} for:item="user">
+                        <div class="slds-tile slds-media" key={user.id}>
+                            <div class="slds-media__figure">
+                                <lightning-avatar size="medium" src={user.smallPhotoUrl}
+                                    fallback-icon-name="standard:user" variant="circle">
+                                </lightning-avatar>
+                            </div>
+                            <div class="slds-media__body">
+                                <h3 class="slds-truncate" title={user.title}>
+                                    <a onclick={addNewRecipients} data-id={user.id}>{user.name}</a>
+                                </h3>
+                                <div class="slds-tile__detail slds-text-body--small">
+                                    <ul class="slds-list--horizontal slds-has-dividers--right">
+                                        <li class="slds-item">{user.title}</li>
+                                        <li class="slds-item">{user.companyName}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </section>
+        </template>
+    </div>
+</template>

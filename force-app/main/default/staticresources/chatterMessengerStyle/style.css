@@ -1,0 +1,3 @@
+lightning-textarea.no-scroll textarea {
+    resize: none;
+}
