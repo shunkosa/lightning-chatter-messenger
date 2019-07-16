@@ -1,7 +1,5 @@
 import { LightningElement, track, wire } from 'lwc';
 import { refreshApex } from '@salesforce/apex';
-import chatterMessengerStyle from '@salesforce/resourceUrl/chatterMessengerStyle';
-import { loadStyle } from 'lightning/platformResourceLoader';
 import searchUsers from '@salesforce/apex/ChatterMessengerController.searchUsers';
 import getConversations from '@salesforce/apex/ChatterMessengerController.getConversations';
 import getConversation from '@salesforce/apex/ChatterMessengerController.getConversation';
@@ -9,10 +7,6 @@ import sendMessage from '@salesforce/apex/ChatterMessengerController.sendMessage
 import replyToMessage from '@salesforce/apex/ChatterMessengerController.replyToMessage';
 
 export default class ChatterMessenger extends LightningElement {
-    connectedCallback() {
-        Promise.all([loadStyle(this, chatterMessengerStyle + '/style.css')]);
-    }
-
     renderedCallback() {
         if (this.showsConversation) {
             this.template.querySelector(".container").scrollIntoView(false);
@@ -67,6 +61,10 @@ export default class ChatterMessenger extends LightningElement {
     @track newMessage = '';
     handleChangeNewMessage(event) {
         this.newMessage = event.target.value;
+        //Auto-resize
+        let offset = event.target.offsetHeight - event.target.clientHeight;
+        event.target.style.height = 'auto';
+        event.target.style.height = event.target.scrollHeight + offset + 'px';
     }
 
     sendMessage() {

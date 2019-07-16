@@ -40,3 +40,11 @@ footer {
 .conversation:hover {
     background-color: #eef1f7;
 }
+
+.message-textarea {
+    resize: none;
+}
+
+.footer-icon {
+    padding-bottom: calc(0.25rem + 1px);
+}
