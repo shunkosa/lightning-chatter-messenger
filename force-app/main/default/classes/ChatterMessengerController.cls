@@ -46,6 +46,16 @@ public with sharing class ChatterMessengerController {
         return result;
     }
 
+    @AuraEnabled
+    public static void publishNewMessageEvent(String conversationId, String messageId){
+        EventBus.publish(
+            new ChatterMessageEvent__e(
+                conversationId__c = conversationId,
+                messageId__c = messageId
+            )
+        );
+    }
+
     public class User {
         @AuraEnabled public String id { get; private set; }
         @AuraEnabled String name { get; set; }
@@ -68,12 +78,14 @@ public with sharing class ChatterMessengerController {
         @AuraEnabled Datetime sentDate { get; set; }
         @AuraEnabled String message { get; set; }
         @AuraEnabled String smallPhotoUrl { get; set; }
-        
+        @AuraEnabled String latestMessageId {get; set;}
+
         public Conversation(ConnectApi.ChatterConversationSummary conv) {
             this.id = conv.id;
             this.sentDate = conv.latestMessage.sentDate;
             this.message = conv.latestMessage.body.text;
             this.smallPhotoUrl = conv.latestMessage.sender.photo.smallPhotoUrl;
+            this.latestMessageId = conv.latestMessage.id;
             this.formattedRecipientNames = '';
             for(ConnectApi.UserSummary user : conv.members){
                 if(UserInfo.getUserId() != user.id) {
