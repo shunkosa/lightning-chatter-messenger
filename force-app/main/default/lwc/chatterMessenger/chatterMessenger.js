@@ -1,16 +1,55 @@
 import { LightningElement, track, wire } from 'lwc';
 import { refreshApex } from '@salesforce/apex';
+import { subscribe, onError } from 'lightning/empApi';
 import searchUsers from '@salesforce/apex/ChatterMessengerController.searchUsers';
 import getConversations from '@salesforce/apex/ChatterMessengerController.getConversations';
 import getConversation from '@salesforce/apex/ChatterMessengerController.getConversation';
 import sendMessage from '@salesforce/apex/ChatterMessengerController.sendMessage';
 import replyToMessage from '@salesforce/apex/ChatterMessengerController.replyToMessage';
+import publishNewMessageEvent from '@salesforce/apex/ChatterMessengerController.publishNewMessageEvent';
 
 export default class ChatterMessenger extends LightningElement {
+    connectedCallback() {
+        const messageCallback = (response) => {
+            const receivedConversationId = response.data.payload.conversationId__c;
+            const receivedMessageId = response.data.payload.messageId__c;
+            if (this.conversationId
+                && this.conversationId === receivedConversationId
+                && this.messages[0].id !== receivedMessageId) { //Refresh in a conversation
+                refreshApex(this.wiredMessagesResult);
+            } else {
+                for (let c of this.conversations) {
+                    if (c.id === receivedConversationId) { //Refresh in home
+                        refreshApex(this.wiredConversationsResult);
+                        break;
+                    }
+                }
+            }
+        };
+
+        subscribe('/event/ChatterMessageEvent__e', -1, messageCallback).then(response => {
+            console.log('Successfully subscribed to : ', JSON.stringify(response.channel));
+        });
+    }
+
     renderedCallback() {
         if (this.showsConversation) {
-            this.template.querySelector(".container").scrollIntoView(false);
+            if (!this.messagesLoaded && this.messages.length > 0) {
+                this.messagesLoaded = true;
+                if (this.getSelectedConversationDetail().latestMessageId !== this.getLatestMessageId()) {
+                    refreshApex(this.wiredMessagesResult);
+                }
+                this.template.querySelector(".container").scrollIntoView(false);
+            }
+        } else if (this.showsHome) {
+            this.template.querySelector(".container").scrollIntoView(true);
         }
+    }
+
+    registerErrorListener() {
+        onError(error => {
+            console.log('Received error from server: ', JSON.stringify(error));
+        });
     }
 
     //Home (Conversation list)
@@ -27,6 +66,7 @@ export default class ChatterMessenger extends LightningElement {
     //Conversation Detail (Message List)
     @track conversationId = '';
     @track messages = [];
+    messagesLoaded = false;
     wiredMessagesResult; //Wired Apex result so it can be refreshed programmatically
     @wire(getConversation, { convId: '$conversationId' })
     wiredMessages(result) {
@@ -41,12 +81,24 @@ export default class ChatterMessenger extends LightningElement {
         }
     }
 
+    getSelectedConversationDetail() {
+        for (let c of this.conversations) {
+            if (c.id === this.conversationId) {
+                return c;
+            }
+        }
+        return null;
+    }
+
+    getLatestMessageId() {
+        return this.messages[this.messages.length - 1].id;
+    }
+
     get formattedRecipientNames() {
         if (this.conversationId) {
-            for (let c of this.conversations) {
-                if (c.id === this.conversationId) {
-                    return c.formattedRecipientNames;
-                }
+            const c = this.getSelectedConversationDetail();
+            if (c) {
+                return c.formattedRecipientNames;
             }
         }
         let result = '';
@@ -68,16 +120,16 @@ export default class ChatterMessenger extends LightningElement {
     }
 
     sendMessage() {
-        if (this.conversationId) {
-            replyToMessage({ text: this.newMessage, msgId: this.messages[this.messages.length - 1].id })
+        if (this.conversationId) { //Reply
+            const msgId = this.getLatestMessageId();
+            replyToMessage({ text: this.newMessage, msgId: msgId })
                 .then(() => {
-                    this.newMessage = '';
-                    refreshApex(this.wiredMessagesResult);
+                    this.handleAfterSend(msgId);
                 })
                 .catch(error => {
-                    console.log('error occurred sending message : ' + JSON.stringify(error));
-                })
-        } else {
+                    console.log('Error occurred while sending message : ' + JSON.stringify(error));
+                });
+        } else { //New conversation
             let newRecipientIds = '';
             for (let r of this.newRecipients) {
                 newRecipientIds += r.id + ',';
@@ -85,18 +137,24 @@ export default class ChatterMessenger extends LightningElement {
             newRecipientIds = newRecipientIds.slice(0, -1); //Remove the last comma
             sendMessage({ text: this.newMessage, recipients: newRecipientIds })
                 .then(result => {
-                    this.newMessage = '';
                     this.conversationId = result.conversationId;
-                    refreshApex(this.wiredMessagesResult);
+                    this.handleAfterSend(result.id);
+                    this.messagesLoaded = true;
                 })
                 .catch(error => {
-                    console.log('error occurred sending message : ' + JSON.stringify(error));
-                })
+                    console.log('Error occurred while sending message : ' + JSON.stringify(error));
+                });
         }
     }
 
-    refreshConversation() {
+    handleAfterSend(messageId) {
+        this.newMessage = '';
+        this.template.querySelector(".message-textarea").value = '';
         refreshApex(this.wiredMessagesResult);
+        publishNewMessageEvent({ conversationId: this.conversationId, messageId: messageId })
+            .catch(error => {
+                console.log('Error occurred while publishing event : ' + JSON.stringify(error));
+            });
     }
 
     //Search User
@@ -164,8 +222,10 @@ export default class ChatterMessenger extends LightningElement {
         this.showsHome = true;
         this.showsConversation = false;
         this.showsUserSearchForm = false;
+        this.conversationId = '';
         this.userSearchKeyword = '';
         this.newRecipients = [];
+        this.messagesLoaded = false;
         refreshApex(this.wiredConversationsResult);
     }
 
