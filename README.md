@@ -5,9 +5,9 @@
 
 ## 📦 Installation
 Click the following link. Before installation, my domain must be enabled in the target org.
-* [Install to Production/DE](https://login.salesforce.com/packaging/installPackage.apexp?p0=04t3i000000Rqs0
+* [Install to Production/DE](https://login.salesforce.com/packaging/installPackage.apexp?p0=04t3i000000Rqs5
 )
-* [Install to Sandbox](https://test.salesforce.com/packaging/installPackage.apexp?p0=04t3i000000Rqs0)
+* [Install to Sandbox](https://test.salesforce.com/packaging/installPackage.apexp?p0=04t3i000000Rqs5)
 
 You can also install in your scratch org by cloning this repo and pushing the source. 
 
