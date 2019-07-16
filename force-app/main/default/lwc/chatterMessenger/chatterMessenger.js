@@ -15,7 +15,7 @@ export default class ChatterMessenger extends LightningElement {
 
     renderedCallback() {
         if (this.showsConversation) {
-            this.template.querySelector("section[id^='messages']").scrollIntoView(false);
+            this.template.querySelector(".container").scrollIntoView(false);
         }
     }
 
