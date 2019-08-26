@@ -2,10 +2,17 @@
     "packageDirectories": [
         {
             "path": "force-app",
-            "default": true
+            "default": true,
+            "package": "lightning-chatter-messenger",
+            "versionName": "Summer '19",
+            "versionNumber": "1.2.0.NEXT"
         }
     ],
     "namespace": "",
     "sfdcLoginUrl": "https://login.salesforce.com",
-    "sourceApiVersion": "46.0"
+    "sourceApiVersion": "46.0",
+    "packageAliases": {
+        "lightning-chatter-messenger": "0Hof4000000CafOCAS",
+        "lightning-chatter-messenger@1.2.0-1": "04tf40000047tmJAAQ"
+    }
 }
