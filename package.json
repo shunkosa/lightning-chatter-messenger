@@ -1,0 +1,46 @@
+{
+    "name": "lightning-chatter-messenger",
+    "private": true,
+    "version": "1.2.0",
+    "description": "",
+    "scripts": {
+        "rebuild": "rm -rf node_modules && rm package-lock.json && npm cache clean --force && rm -rf ~/.npm && npm install",
+        "lint": "eslint **/lwc/**",
+        "test": "npm run lint && npm run test:unit",
+        "test:unit": "lwc-jest",
+        "test:unit:watch": "lwc-jest --watch",
+        "test:unit:debug": "lwc-jest --debug",
+        "prettier": "prettier --write \"**/*.{cls,cmp,component,css,html,js,json,md,page,trigger,yaml,yml}\"",
+        "prettier:verify": "prettier --list-different \"**/*.{cls,cmp,component,css,html,js,json,md,page,trigger,yaml,yml}\"",
+        "prettier:debug": "prettier --debug-check \"**/*.{cls,cmp,component,css,html,js,json,md,page,trigger,yaml,yml}\""
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/shunkosa/lightning-chatter-messenger.git"
+    },
+    "author": "Shun Kosaka",
+    "license": "MIT",
+    "devDependencies": {
+        "@salesforce/eslint-config-lwc": "^0.3.0",
+        "@salesforce/sfdx-lwc-jest": "^0.5.4",
+        "eslint": "^5.16.0",
+        "eslint-config-prettier": "^6.0.0",
+        "eslint-plugin-prettier": "^3.1.0",
+        "husky": "^3.0.2",
+        "js-yaml": "^3.13.1",
+        "lint-staged": "^9.2.1",
+        "prettier": "^1.18.2",
+        "prettier-plugin-apex": "^1.0.0-rc.6"
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged && npm run lint"
+        }
+    },
+    "lint-staged": {
+        "**/*.{cls,cmp,component,css,html,js,json,md,page,trigger,yaml,yml}": [
+            "prettier --write",
+            "git add"
+        ]
+    }
+}
