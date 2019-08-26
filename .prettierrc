@@ -1,5 +1,10 @@
+    
 {
+  "singleQuote": true, 
+  "tabWidth": 4,
   "trailingComma": "none",
+  "arrowParens": "always",
+  "endOfLine": "lf",
   "overrides": [
     {
       "files": "**/lwc/**/*.html",
