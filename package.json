@@ -22,7 +22,7 @@
     "license": "MIT",
     "devDependencies": {
         "@salesforce/eslint-config-lwc": "^0.3.0",
-        "@salesforce/sfdx-lwc-jest": "^0.5.4",
+        "@salesforce/sfdx-lwc-jest": "^0.5.5",
         "eslint": "^5.16.0",
         "eslint-config-prettier": "^6.0.0",
         "eslint-plugin-prettier": "^3.1.0",
