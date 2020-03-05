@@ -1,0 +1,24 @@
+[
+    {
+        "conversationId": "03M6g000000CaTIEA0",
+        "formattedSentDate": "3/5/2020, 12:39 AM",
+        "id": "03J6g000000KyzqEAC",
+        "isMine": true,
+        "recipients": ["0056g0000040vawAAA", "0056g0000040voDAAQ"],
+        "sender": "Carol",
+        "sentDate": "2020-03-05 08:39:05",
+        "smallPhotoUrl": "https://example.com/photo.png",
+        "text": "Do you hate me, Therese?"
+    },
+    {
+        "conversationId": "03M6g000000CaTIEA0",
+        "formattedSentDate": "3/5/2020, 12:38 AM",
+        "id": "03J6g000000KyzlEAC",
+        "isMine": false,
+        "recipients": ["0056g0000040vawAAA", "0056g0000040voDAAQ"],
+        "sender": "Therese",
+        "sendDate": "2020-03-05 08:38:00",
+        "smallPhotoUrl": "https://example.com/photo.png",
+        "text": "No. How could I hate you?"
+    }
+]

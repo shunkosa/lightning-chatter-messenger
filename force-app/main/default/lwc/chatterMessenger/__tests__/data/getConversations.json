@@ -1,0 +1,26 @@
+[
+    {
+        "formattedRecipientNames": "John",
+        "id": "03M6g000000CaTIEA0",
+        "latestMessageId": "03J6g000000KyzlEAC",
+        "message": "Hello!",
+        "sentDate": "2020-03-01 07:30:00",
+        "smallPhotoUrl": "https://www.example.com/photo.png"
+    },
+    {
+        "formattedRecipientNames": "Amy, Jeniffer",
+        "id": "03M6g000000CaTIEQ0",
+        "latestMessageId": "03J6g000000KyzlTYC",
+        "message": "Bonjour!",
+        "sentDate": "2020-03-02 09:45:00",
+        "smallPhotoUrl": "https://www.example.com/photo.png"
+    },
+    {
+        "formattedRecipientNames": "Astro, Codey, Einstien",
+        "id": "03M6g000000CaTIBG0",
+        "latestMessageId": "03J6g000000KyzlYGC",
+        "message": "Trailhead",
+        "sentDate": "2020-03-03 09:45:00",
+        "smallPhotoUrl": "https://www.example.com/salesforcelandia.png"
+    }
+]

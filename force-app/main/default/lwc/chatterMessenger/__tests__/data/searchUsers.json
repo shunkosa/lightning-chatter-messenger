@@ -1,0 +1,30 @@
+[
+    {
+        "companyName": "Demo Company",
+        "id": "0056g0000040vawAAA",
+        "name": "Therese",
+        "smallPhotoUrl": "https://example.com/photo.png",
+        "title": null
+    },
+    {
+        "companyName": "Demo Company",
+        "id": "0056g0000040voDAAQ",
+        "name": "Carol",
+        "smallPhotoUrl": "https://example.com/photo.png",
+        "title": null
+    },
+    {
+        "companyName": "Demo Company",
+        "id": "0056g0000040vawCCC",
+        "name": "John",
+        "smallPhotoUrl": "https://example.com/photo.png",
+        "title": "CEO"
+    },
+    {
+        "companyName": "Demo Company",
+        "id": "0056g0000040vawDDD",
+        "name": "Mary",
+        "smallPhotoUrl": "https://example.com/photo.png",
+        "title": null
+    }
+]
