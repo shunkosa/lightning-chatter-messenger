@@ -29,3 +29,6 @@ $RECYCLE.BIN/
 
 # VS Code project settings
 .vscode/
+
+# Jest converage
+coverage/
