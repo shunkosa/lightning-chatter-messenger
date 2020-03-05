@@ -107,8 +107,8 @@
             <div class="slds-form-element">
               <div class="slds-form-element__control">
                 <textarea class="slds-textarea message-textarea" rows="1" oninput={handleChangeNewMessage}>
-{newMessage}</textarea
-                >
+                {newMessage}
+                </textarea>
               </div>
             </div>
           </lightning-layout-item>
@@ -121,7 +121,7 @@
     </template>
     <!--Search User-->
     <template if:true={showsUserSearchForm}>
-      <header class="slds-p-around_x-small search-user">
+      <header class="slds-p-around_x-small user-search">
         <lightning-layout>
           <lightning-layout-item flexibility="grow">
             <lightning-button-icon variant="bare" icon-name="utility:close" size="medium" onclick={navigateToHome}>
