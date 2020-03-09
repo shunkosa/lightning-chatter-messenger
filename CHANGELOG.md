@@ -1,4 +1,4 @@
-# 1.2.1
+# 1.2.1 - March 9, 2020
 
 No feature updates but did some under-the-hood maintenance
 
