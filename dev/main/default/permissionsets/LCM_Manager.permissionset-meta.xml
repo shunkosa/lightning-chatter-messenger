@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <applicationVisibilities>
+        <application>LCM_Sample_App</application>
+        <visible>true</visible>
+    </applicationVisibilities>
+    <description>Permission to a custom app that contains chatter messenger</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Chatter Messenger Manager</label>
+</PermissionSet>

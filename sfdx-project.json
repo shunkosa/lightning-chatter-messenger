@@ -6,6 +6,9 @@
             "package": "lightning-chatter-messenger",
             "versionName": "ver 1.2",
             "versionNumber": "1.2.1.NEXT"
+        },
+        {
+            "path": "dev"
         }
     ],
     "namespace": "",
