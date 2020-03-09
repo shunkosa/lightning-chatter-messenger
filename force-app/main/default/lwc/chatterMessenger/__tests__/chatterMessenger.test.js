@@ -53,7 +53,7 @@ describe('c-chatter-messenger', () => {
         const userSearchHeaderEl = element.shadowRoot.querySelector('header');
         expect(userSearchHeaderEl.classList).toContain('user-search');
 
-        //Query first button on Search user screen
+        //Query the first button on Search user screen
         const navigateToHomeButtonEl = element.shadowRoot.querySelector('lightning-button-icon');
         navigateToHomeButtonEl.click();
         await flushPromises();
@@ -74,8 +74,31 @@ describe('c-chatter-messenger', () => {
         navigateToUserSearchButtonEl.click();
         await flushPromises();
 
+        //Assert that navigated to the user search screen and users are rendered
         const userEls = element.shadowRoot.querySelectorAll('div.user');
         expect(userEls).toHaveLength(4);
+
+        //Select the first user
+        const userLinkEl = element.shadowRoot.querySelector('div.user a');
+        userLinkEl.click();
+        await flushPromises();
+
+        //Assert that a pill which has the selected user id is rendered
+        const newRecipientEl = element.shadowRoot.querySelector('lightning-pill');
+        expect(newRecipientEl).toBeDefined();
+        expect(newRecipientEl.dataset.id).toBe(userLinkEl.dataset.id);
+
+        //Start a conversation
+        const startConversationButtonEl = element.shadowRoot.querySelectorAll('lightning-button-icon')[1];
+        startConversationButtonEl.click();
+        await flushPromises();
+
+        const textareaEl = element.shadowRoot.querySelector('textarea');
+        textareaEl.value = 'Hello!';
+
+        const sendButtonEl = element.shadowRoot.querySelector('lightning-button-icon.send-message');
+        expect(sendButtonEl).toBeDefined();
+        sendButtonEl.click();
     });
 
     it('Navigates between home and conversation-detail', async () => {
@@ -91,7 +114,7 @@ describe('c-chatter-messenger', () => {
         const conversationEls = element.shadowRoot.querySelectorAll('div.conversation');
         expect(conversationEls).toHaveLength(3);
 
-        //Query first conversation
+        //Query the first conversation
         const linkEl = element.shadowRoot.querySelector('div.conversation a');
         linkEl.click();
         await flushPromises();
