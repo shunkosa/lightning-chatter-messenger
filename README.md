@@ -1,6 +1,6 @@
 # Lightning Chatter Messenger
 
-[![codecov](https://codecov.io/gh/shunkosa/lightning-chatter-messenger/branch/master/graph/badge.svg)](https://codecov.io/gh/shunkosa/lightning-chatter-messenger)
+[![Github Workflow](https://github.com/shunkosa/lightning-chatter-messenger/workflows/unit%20test/badge.svg?branch=master)](https://github.com/lightning-chatter-messenger/actions?query=workflow%3A%22unit%20test) [![codecov](https://codecov.io/gh/shunkosa/lightning-chatter-messenger/branch/master/graph/badge.svg)](https://codecov.io/gh/shunkosa/lightning-chatter-messenger)
 
 ⚡Chatter messenger utility item, which supports private chatter conversation, in Salesforce Lightning Experience. Built by Lightning Web Component.
 
@@ -10,8 +10,8 @@
 
 Click the following link. Before installation, my domain must be enabled in the target org.
 
--   [Install to Production/DE](https://login.salesforce.com/packaging/installPackage.apexp?p0=04tf40000047tmJAAQ)
--   [Install to Sandbox](https://test.salesforce.com/packaging/installPackage.apexp?p0=04tf40000047tmJAAQ)
+-   [Install to Production/DE](https://login.salesforce.com/packaging/installPackage.apexp?p0=04tf4000004Ez0PAAS)
+-   [Install to Sandbox](https://test.salesforce.com/packaging/installPackage.apexp?p0=04tf4000004Ez0PAAS)
 
 You can also install in your scratch org by cloning this repo and pushing the source.
 

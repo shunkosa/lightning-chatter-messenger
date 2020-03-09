@@ -1,18 +1,19 @@
 {
-  "packageDirectories": [
-    {
-      "path": "force-app",
-      "default": true,
-      "package": "lightning-chatter-messenger",
-      "versionName": "Summer '19",
-      "versionNumber": "1.2.0.NEXT"
+    "packageDirectories": [
+        {
+            "path": "force-app",
+            "default": true,
+            "package": "lightning-chatter-messenger",
+            "versionName": "ver 1.2",
+            "versionNumber": "1.2.1.NEXT"
+        }
+    ],
+    "namespace": "",
+    "sfdcLoginUrl": "https://login.salesforce.com",
+    "sourceApiVersion": "48.0",
+    "packageAliases": {
+        "lightning-chatter-messenger": "0Hof4000000CafOCAS",
+        "lightning-chatter-messenger@1.2.0-1": "04tf40000047tmJAAQ",
+        "lightning-chatter-messenger@1.2.1-1": "04tf4000004Ez0PAAS"
     }
-  ],
-  "namespace": "",
-  "sfdcLoginUrl": "https://login.salesforce.com",
-  "sourceApiVersion": "48.0",
-  "packageAliases": {
-    "lightning-chatter-messenger": "0Hof4000000CafOCAS",
-    "lightning-chatter-messenger@1.2.0-1": "04tf40000047tmJAAQ"
-  }
 }
