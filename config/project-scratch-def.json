@@ -5,6 +5,9 @@
     "settings": {
         "lightningExperienceSettings": {
             "enableS1DesktopEnabled": true
+        },
+        "securitySettings": {
+            "enableAdminLoginAsAnyUser": true
         }
     }
 }
