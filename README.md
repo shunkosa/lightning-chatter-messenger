@@ -1,6 +1,6 @@
 # Lightning Chatter Messenger
 
-[![Github Workflow](https://github.com/shunkosa/lightning-chatter-messenger/workflows/unit%20test/badge.svg?branch=master)](https://github.com/lightning-chatter-messenger/actions?query=workflow%3A%22unit%20test) [![codecov](https://codecov.io/gh/shunkosa/lightning-chatter-messenger/branch/master/graph/badge.svg)](https://codecov.io/gh/shunkosa/lightning-chatter-messenger)
+[![Github Workflow](https://github.com/shunkosa/lightning-chatter-messenger/workflows/unit%20test/badge.svg?branch=master)](https://github.com/shunkosa/lightning-chatter-messenger/actions?query=workflow%3A%22unit%20test%22) [![codecov](https://codecov.io/gh/shunkosa/lightning-chatter-messenger/branch/master/graph/badge.svg)](https://codecov.io/gh/shunkosa/lightning-chatter-messenger)
 
 ⚡Chatter messenger utility item, which supports private chatter conversation, in Salesforce Lightning Experience. Built by Lightning Web Component.
 
@@ -20,6 +20,23 @@ You can also install in your scratch org by cloning this repo and pushing the so
 After installation, add `chatterMessenger` custom component as an utility item in application setting.
 
 <img src="./doc/img/application_setting.png" width="600px" border="1">
+
+## 🛠 Development
+
+1. Clone this repo and run `npm install`.
+2. Authorize a DevHub (if not yet) and create a scratch org.
+3. Push sources.
+4. Assign permission.
+
+```
+sfdx force:user:permset:assign -n LCM_Manager
+```
+
+5. Create test users.
+
+```
+sfdx force:apex:execute -f ./scripts/apex/init.apex
+```
 
 ## ✋ Feedback/Contributing
 
