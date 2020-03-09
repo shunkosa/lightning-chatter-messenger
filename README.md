@@ -1,5 +1,7 @@
 # Lightning Chatter Messenger
 
+[![codecov](https://codecov.io/gh/shunkosa/lightning-chatter-messenger/branch/master/graph/badge.svg)](https://codecov.io/gh/shunkosa/lightning-chatter-messenger)
+
 ⚡Chatter messenger utility item, which supports private chatter conversation, in Salesforce Lightning Experience. Built by Lightning Web Component.
 
 <img src="./doc/img/utility_item.png">
