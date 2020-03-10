@@ -1,4 +1,5 @@
 import { createElement } from 'lwc';
+import { subscribe } from 'lightning/empApi';
 import ChatterMessenger from 'c/chatterMessenger';
 import { registerApexTestWireAdapter } from '@salesforce/sfdx-lwc-jest';
 
@@ -14,8 +15,20 @@ import searchUsers from '@salesforce/apex/ChatterMessengerController.searchUsers
 const mockSearchUsers = require('./data/searchUsers.json');
 const searchUsersAdapter = registerApexTestWireAdapter(searchUsers);
 
+import sendMessage from '@salesforce/apex/ChatterMessengerController.sendMessage';
+const mockSendMessage = require('./data/sendMessage.json');
+
 import flushPromises from 'flush-promises';
-import { subscribe } from 'lightning/empApi';
+
+jest.mock(
+    '@salesforce/apex/ChatterMessengerController.sendMessage',
+    () => {
+        return {
+            default: jest.fn()
+        };
+    },
+    { virtual: true }
+);
 
 describe('c-chatter-messenger', () => {
     beforeEach(() => {
@@ -132,8 +145,12 @@ describe('c-chatter-messenger', () => {
             });
             document.body.appendChild(element);
 
+            //Navigates to user-search
             const navigateToUserSearchButtonEl = element.shadowRoot.querySelector('lightning-button-icon');
             navigateToUserSearchButtonEl.click();
+
+            //Mock user search result
+            searchUsersAdapter.emit(mockSearchUsers);
             await flushPromises();
         });
 
@@ -145,7 +162,7 @@ describe('c-chatter-messenger', () => {
         });
 
         it('Navigates to home', async () => {
-            //Query the first button on Search user screen
+            //Query the first button on user-search screen
             const navigateToHomeButtonEl = element.shadowRoot.querySelector('lightning-button-icon');
             navigateToHomeButtonEl.click();
             await flushPromises();
@@ -155,10 +172,6 @@ describe('c-chatter-messenger', () => {
         });
 
         it('Searches user', async () => {
-            //Mock user search result
-            searchUsersAdapter.emit(mockSearchUsers);
-            await flushPromises();
-
             //Search user
             const inputEl = element.shadowRoot.querySelector('lightning-input');
             inputEl.value = 'test';
@@ -167,7 +180,9 @@ describe('c-chatter-messenger', () => {
             //Assert that users are rendered
             const userEls = element.shadowRoot.querySelectorAll('div.user');
             expect(userEls).toHaveLength(4);
+        });
 
+        it('Selects a recipient', async () => {
             //Select the first user
             const userLinkEl = element.shadowRoot.querySelector('div.user a');
             userLinkEl.click();
@@ -177,16 +192,45 @@ describe('c-chatter-messenger', () => {
             const newRecipientEl = element.shadowRoot.querySelector('lightning-pill');
             expect(newRecipientEl).toBeDefined();
             expect(newRecipientEl.dataset.id).toBe(userLinkEl.dataset.id);
+        });
 
+        it('Removes a recipient', async () => {
+            //Select the first user
+            const userLinkEl = element.shadowRoot.querySelector('div.user a');
+            userLinkEl.click();
+            await flushPromises();
+
+            const newRecipientEl = element.shadowRoot.querySelector('lightning-pill');
             //Remove the selected user
             newRecipientEl.dispatchEvent(new CustomEvent('remove'));
             await flushPromises();
+
             const removedRecipientsEl = element.shadowRoot.querySelector('lightning-pill');
             expect(removedRecipientsEl).toBeNull();
         });
 
+        it('Navigates to the previous page from conversation-detail before sending a message', async () => {
+            //Select the first user
+            const userLinkEl = element.shadowRoot.querySelector('div.user a');
+            userLinkEl.click();
+            await flushPromises();
+
+            //Navigate to a new conversation screen
+            const startConversationButtonEl = element.shadowRoot.querySelectorAll('lightning-button-icon')[1];
+            startConversationButtonEl.click();
+            await flushPromises();
+
+            //Previous page should be user-search screen
+            const previousButtonEl = element.shadowRoot.querySelector('lightning-button-icon');
+            previousButtonEl.click();
+            await flushPromises();
+
+            const headerEl = element.shadowRoot.querySelector('header');
+            expect(headerEl.classList).toContain('user-search');
+        });
+
         it('Starts a conversation', async () => {
-            //Mock user search result
+            //Mock user search result and send message
             searchUsersAdapter.emit(mockSearchUsers);
             await flushPromises();
 
@@ -195,10 +239,13 @@ describe('c-chatter-messenger', () => {
             userLinkEl.click();
             await flushPromises();
 
-            //Start a conversation
+            //Navigate to a new conversation screen
             const startConversationButtonEl = element.shadowRoot.querySelectorAll('lightning-button-icon')[1];
             startConversationButtonEl.click();
             await flushPromises();
+
+            //Mock apex sendMessage() response
+            sendMessage.mockResolvedValue(mockSendMessage);
 
             //Send a message
             const textareaEl = element.shadowRoot.querySelector('textarea');
@@ -210,17 +257,8 @@ describe('c-chatter-messenger', () => {
             sendButtonEl.click();
 
             //Assert that textarea is flushed after sending the message
-            //TODO: call handleAfterSend()
-            //await flushPromises();
-            //expect(textareaEl.value).toBe('');
-
-            //Navigates to user-search
-            const backButtonEl = element.shadowRoot.querySelectorAll('lightning-button-icon')[0];
-            backButtonEl.click();
             await flushPromises();
-
-            const headerEl = element.shadowRoot.querySelector('header');
-            expect(headerEl.classList).toContain('user-search');
+            expect(textareaEl.value).toBe('');
         });
     });
 
@@ -261,19 +299,16 @@ describe('c-chatter-messenger', () => {
             expect(homeHeaderEl.classList).toContain('home');
         });
 
-        it('Sends a new message', async () => {
+        it('Replies to the message', async () => {
             const textareaEl = element.shadowRoot.querySelector('textarea');
             textareaEl.value = 'How are you?';
             textareaEl.dispatchEvent(new CustomEvent('input'));
 
             const sendButtonEl = element.shadowRoot.querySelector('lightning-button-icon.send-message');
-            expect(sendButtonEl).toBeDefined();
             sendButtonEl.click();
 
-            //Assert that textarea is flushed after sending the message
-            //TODO: call handleAfterSend()
-            //await flushPromises();
-            //expect(textareaEl.value).toBe('');
+            await flushPromises();
+            expect(textareaEl.value).toBe('');
         });
 
         it('Receives a new message on conversation-detail', async () => {
