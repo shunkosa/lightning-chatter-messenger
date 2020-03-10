@@ -1,0 +1,10 @@
+{
+    "conversationId": "03M560000004DFSEA2",
+    "formattedSentDate": "3/10/2020, 12:34 AM",
+    "id": "03J560000004I6qEAE",
+    "isMine": true,
+    "recipients": ["00556000004PKXTAA4", "00556000004PKXYAA4"],
+    "sender": "User User",
+    "smallPhotoUrl": "https://mydomain.documentforce.com/profilephoto/005/T",
+    "text": "Hello!"
+}
