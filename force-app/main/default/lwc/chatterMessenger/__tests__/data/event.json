@@ -1,0 +1,15 @@
+{
+    "data": {
+        "schema": "a9SbAGsZvysbJq_U77Mv6Q",
+        "payload": {
+            "CreatedById": "00556000004PKXTAA4",
+            "CreatedDate": "2020-03-09T14:05:35Z",
+            "messageId__c": "03J560000004I6gEAE",
+            "conversationId__c": "03M6g000000CaTIEA0"
+        },
+        "event": {
+            "replayId": 74601
+        }
+    },
+    "channel": "/event/ChatterMessageEvent__e"
+}
