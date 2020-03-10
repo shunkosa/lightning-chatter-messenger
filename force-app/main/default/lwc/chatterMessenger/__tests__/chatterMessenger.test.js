@@ -251,10 +251,7 @@ describe('c-chatter-messenger', () => {
             const textareaEl = element.shadowRoot.querySelector('textarea');
             textareaEl.value = 'Hello!';
             textareaEl.dispatchEvent(new CustomEvent('input'));
-
-            const sendButtonEl = element.shadowRoot.querySelector('lightning-button-icon.send-message');
-            expect(sendButtonEl).toBeDefined();
-            sendButtonEl.click();
+            textareaEl.dispatchEvent(new KeyboardEvent('keydown', { keyCode: 13 }));
 
             //Assert that textarea is flushed after sending the message
             await flushPromises();
@@ -303,9 +300,7 @@ describe('c-chatter-messenger', () => {
             const textareaEl = element.shadowRoot.querySelector('textarea');
             textareaEl.value = 'How are you?';
             textareaEl.dispatchEvent(new CustomEvent('input'));
-
-            const sendButtonEl = element.shadowRoot.querySelector('lightning-button-icon.send-message');
-            sendButtonEl.click();
+            textareaEl.dispatchEvent(new KeyboardEvent('keydown', { keyCode: 13 }));
 
             await flushPromises();
             expect(textareaEl.value).toBe('');

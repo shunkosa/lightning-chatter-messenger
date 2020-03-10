@@ -103,32 +103,19 @@
                 </ul>
             </section>
             <footer class="slds-p-around_x-small">
-                <lightning-layout vertical-align="end">
-                    <lightning-layout-item flexibility="grow">
-                        <div class="slds-form-element">
-                            <div class="slds-form-element__control">
-                                <textarea
-                                    class="slds-textarea message-textarea"
-                                    rows="1"
-                                    oninput={handleChangeNewMessage}
-                                >
-                {newMessage}
-                </textarea
-                                >
-                            </div>
-                        </div>
-                    </lightning-layout-item>
-                    <lightning-layout-item flexibility="no-grow" class="slds-p-left_x-small footer-icon">
-                        <lightning-button-icon
-                            variant="border-filled"
-                            icon-name="utility:send"
-                            size="medium"
-                            onclick={sendMessage}
-                            class="send-message"
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control">
+                        <textarea
+                            class="slds-textarea message-textarea"
+                            rows="1"
+                            oninput={handleChangeNewMessage}
+                            onkeydown={handleKeyDown}
                         >
-                        </lightning-button-icon>
-                    </lightning-layout-item>
-                </lightning-layout>
+        {newMessage}
+        </textarea
+                        >
+                    </div>
+                </div>
             </footer>
         </template>
         <!--Search User-->
