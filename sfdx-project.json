@@ -4,8 +4,8 @@
             "path": "force-app",
             "default": true,
             "package": "lightning-chatter-messenger",
-            "versionName": "ver 1.2",
-            "versionNumber": "1.2.1.NEXT"
+            "versionName": "ver 1.3",
+            "versionNumber": "1.3.0.NEXT"
         },
         {
             "path": "dev"
@@ -17,6 +17,7 @@
     "packageAliases": {
         "lightning-chatter-messenger": "0Hof4000000CafOCAS",
         "lightning-chatter-messenger@1.2.0-1": "04tf40000047tmJAAQ",
-        "lightning-chatter-messenger@1.2.1-1": "04tf4000004Ez0PAAS"
+        "lightning-chatter-messenger@1.2.1-1": "04tf4000004Ez0PAAS",
+        "lightning-chatter-messenger@1.3.0-1": "04tf4000004Ez56AAC"
     }
 }
