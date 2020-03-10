@@ -113,6 +113,13 @@ export default class ChatterMessenger extends LightningElement {
         event.target.style.height = event.target.scrollHeight + offset + 'px';
     }
 
+    handleKeyDown(event) {
+        if (event.keyCode === 13 && !event.shiftKey) {
+            event.preventDefault();
+            this.sendMessage();
+        }
+    }
+
     sendMessage() {
         if (this.conversationId) {
             //Reply

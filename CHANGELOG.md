@@ -1,3 +1,13 @@
+# 1.3.0 - March 11, 2020
+
+## Added
+
+-   Message can be submitted with enter key. Newline can be returned with shift + enter key.
+
+## Removed
+
+-   Removed submit button icon.
+
 # 1.2.1 - March 9, 2020
 
 No feature updates but did some under-the-hood maintenance
