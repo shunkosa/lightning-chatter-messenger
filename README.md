@@ -21,18 +21,19 @@ After installation, add `chatterMessenger` custom component as an utility item i
 
 <img src="./doc/img/application_setting.png" width="600px" border="1">
 
+Make sure that the profile of the users has create and read access to Chatter Message Event to refresh the screen automatically.
+
 ## 🛠 Development
 
 1. Clone this repo and run `npm install`.
-2. Authorize a DevHub (if not yet) and create a scratch org.
-3. Push sources.
-4. Assign permission.
+2. Authorize a DevHub (if not yet) and create a scratch org, and then push the source to the org. (Or use sfdx button above)
+3. Assign permission.
 
 ```
 sfdx force:user:permset:assign -n LCM_Manager
 ```
 
-5. Create test users.
+4. Create test users.
 
 ```
 sfdx force:apex:execute -f ./scripts/apex/init.apex
