@@ -7,4 +7,13 @@
     <description>Permission to a custom app that contains chatter messenger</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Chatter Messenger Manager</label>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>ChatterMessageEvent__e</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
 </PermissionSet>
