@@ -2,7 +2,7 @@
 
 [![Github Workflow](https://github.com/shunkosa/lightning-chatter-messenger/workflows/unit%20test/badge.svg?branch=master)](https://github.com/shunkosa/lightning-chatter-messenger/actions?query=workflow%3A%22unit%20test%22) [![codecov](https://codecov.io/gh/shunkosa/lightning-chatter-messenger/branch/master/graph/badge.svg)](https://codecov.io/gh/shunkosa/lightning-chatter-messenger)
 
-⚡Chatter messenger utility item, which supports private chatter conversation, in Salesforce Lightning Experience. Built by Lightning Web Component.
+⚡Chatter messenger utility item, which supports private chatter conversation, in Salesforce Lightning Experience. Built by Lightning Web Component. Motivated by the idea [Chatter Messenger for Salesforce](https://success.salesforce.com/ideaView?id=08730000000cGIDAA2)
 
 <img src="./doc/img/utility_item.png">
 
