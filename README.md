@@ -4,7 +4,9 @@
 
 ⚡Chatter messenger utility item, which supports private chatter conversation, in Salesforce Lightning Experience. Built by Lightning Web Component. Motivated by the idea [Chatter Messenger for Salesforce](https://success.salesforce.com/ideaView?id=08730000000cGIDAA2)
 
-<img src="./doc/img/utility_item.png">
+<div align="center">
+<img src="./doc/img/screenshot.gif">
+</div>
 
 ## 📦 Installation
 
